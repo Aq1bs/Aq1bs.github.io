@@ -1,0 +1,150 @@
+/* General Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center; /* Ensures text is centered within elements */
+  background-color: #f4f4f9;
+  color: #333;
+  padding: 20px;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f4e4c4; /* Soft light yellow tint */
+  color: #333;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Center Current Time and Countdown */
+.current-time, .countdown {
+  margin: 20px auto; /* Centers horizontally and adds spacing */
+  text-align: center; /* Centers text alignment */
+
+  /* Current Time Styling */
+  font-size: 3rem; /* Increased font size for more emphasis */
+  font-weight: bold; /* Keeps the text bold */
+  color: #0066cc; /* Blue color for contrast (if applicable) */
+  margin-bottom: 20px; /* Adds spacing below the current time */
+  text-align: center; /* Ensures it's centered */
+}
+
+
+
+/* Table Styles (kept as is for reference) */
+table {
+  background-color: #efc701; /* Cream background */
+  border-collapse: collapse;
+  width: 60%; /* Adjust table width */
+  margin: 20px auto; /* Center the table */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+
+    border: 1px solid #ddd; /* Keep the table borders */
+    padding: 10px; /* Spacing inside each cell */
+    text-align: center; /* Center the text */
+    font-size: 2rem; /* Increase this value for larger text */
+  
+}
+
+th {
+  background-color: #f0f8ff; /* Light blue header */
+  color: #333;
+  font-weight: bold;
+}
+
+
+table {
+  background-color: #fffdd0; /* Cream background color */
+  border-collapse: collapse; /* Ensures borders don't double up */
+  width: 100%; /* Makes the table take up the full width of its container */
+  margin: 20px 0; /* Adds spacing above and below the table */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+  border-radius: 10px; /* Rounded corners for a sleek look */
+  overflow: hidden; /* Ensures corners apply properly */
+}
+
+/* Style the table rows and cells */
+table th, table td {
+  padding: 12px; /* Adds space inside cells */
+  text-align: center; /* Centers the text */
+  border: 1px solid #ddd; /* Light grey border between cells */
+}
+
+/* Style the table header */
+table th {
+  background-color: #f0e68c; /* Slightly darker cream for the header */
+  font-weight: bold;
+}
+
+
+
+h1 {
+  color: #0066cc;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 60%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #f0f8ff;
+  color: #333;
+}
+
+
+  /* Countdown Timer Styling */
+.countdown {
+  background-color: #fffdd0; /* Cream background */
+  border-radius: 20px; /* Rounded corners */
+  padding: 20px; /* Extra padding for spacing */
+  color: red; /* Bold red text */
+  font-size: 3rem; /* Larger font size—make this even bigger if needed */
+  font-weight: bold; /* Keep the text bold */
+  text-align: center; /* Ensure text is centered */
+  display: inline-block; /* Keep the box around the text compact */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for style */
+}
+
+/* No Eating Image Container */
+#no-eating-container {
+  display: flex;
+  justify-content: space-between; /* Aligns images to the left and right */
+  align-items: center;
+  margin-top: 20px; /* Adds spacing above the images */
+}
+
+/* Shared Image Styling */
+.no-eating-image {
+  width: 100px; /* Adjust image size as needed */
+  animation: pulse 1s infinite; /* Add pulsing effect */
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Slight enlargement during pulse */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
