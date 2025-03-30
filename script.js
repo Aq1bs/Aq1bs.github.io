@@ -15,11 +15,11 @@ updateCurrentTime(); // Call it once immediately to display the time right away
 
 // Define all the prayer times for the day
 const prayerTimes = [
-  { name: "Fajr", time: "04:07" },
-  { name: "Dhuhr", time: "12:14" },
-  { name: "Asr", time: "16:21" },
-  { name: "Maghrib", time: "18:28" },
-  { name: "Isha", time: "20:01" }
+  { name: "Fajr", time: "04:41" },
+  { name: "Dhuhr", time: "13:11" },
+  { name: "Asr", time: "17:34" },
+  { name: "Maghrib", time: "19:44" },
+  { name: "Isha", time: "21:21" }
 ];
 
 // Function to calculate the next prayer
