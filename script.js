@@ -5,7 +5,7 @@ function updateCurrentTime() {
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
 
-  document.getElementById("current-time").innerText = 
+  document.getElementById("current-time").innerText =
     `Current Time: ${hours}:${minutes}:${seconds}`;
 }
 
@@ -15,7 +15,7 @@ updateCurrentTime(); // Call it once immediately to display the time right away
 
 // Define all the prayer times for the day
 const prayerTimes = [
-  { name: "Fajr", time: "04:41" },
+  { name: "Fajr", time: "05:41" },
   { name: "Dhuhr", time: "13:11" },
   { name: "Asr", time: "17:34" },
   { name: "Maghrib", time: "19:44" },
@@ -46,80 +46,24 @@ function getNextPrayer() {
   return { ...prayerTimes[0], timeObj: nextDayPrayerTime };
 }
 
-function updateIftarAndSuhoorCountdown() {
-  const now = new Date();
-  const prayerTimes = {
-    Fajr: "04:15",
-    Maghrib: "18:22"
-  };
-
-  // Parsing prayer times
-  const [fajrHours, fajrMinutes] = prayerTimes.Fajr.split(":").map(Number);
-  const [maghribHours, maghribMinutes] = prayerTimes.Maghrib.split(":").map(Number);
-
-  // Create Date objects for Fajr and Maghrib
-  const fajrTime = new Date();
-  fajrTime.setHours(fajrHours, fajrMinutes, 0);
-
-  const maghribTime = new Date();
-  maghribTime.setHours(maghribHours, maghribMinutes, 0);
-
-  const iftarContainer = document.getElementById("iftar-countdown");
-
-  if (now < maghribTime) {
-    // Iftar countdown
-    const timeDiff = maghribTime - now;
-
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-    iftarContainer.innerText = `🕌 Iftar time in ${hours}h ${minutes}m ${seconds}s 🕌`;
-
-    // Pulse effect during the last minute before Iftar
-    if (timeDiff <= 60000) {
-      iftarContainer.classList.add("pulse");
-    } else {
-      iftarContainer.classList.remove("pulse");
-    }
-  } else if (now < fajrTime) {
-    // Suhoor countdown
-    const timeDiff = fajrTime - now;
-
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-    iftarContainer.innerText = `🕌 Sehri time ends in ${hours}h ${minutes}m ${seconds}s 🕌`;
-
-    // Pulse effect during the last minute before Suhoor ends
-    if (timeDiff <= 60000) {
-      iftarContainer.classList.add("pulse");
-    } else {
-      iftarContainer.classList.remove("pulse");
-    }
-  } else {
-    // After Fajr, show placeholder text
-    iftarContainer.innerText = "🕌 Countdown will update after sunset.";
-    iftarContainer.classList.remove("pulse");
-  }
-}
-
-// Call the function every second
-setInterval(updateIftarAndSuhoorCountdown, 1000);
-
-// Update the countdown every second
-setInterval(() => {
+// Function to update the prayer countdown
+function updateCountdown() {
   const { name, timeObj } = getNextPrayer();
   const now = new Date();
   const timeDiff = timeObj - now;
 
   if (timeDiff > 0) {
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+    const seconds = Math.floor((timeDiff / 1000) % 60);
 
     document.getElementById("countdown").innerText =
       `🕌 ${name} is in ${hours}h ${minutes}m ${seconds}s 🕌`;
+  } else {
+    document.getElementById("countdown").innerText = "It's time for prayer!";
   }
-}, 1000);
+}
+
+// Update the countdown every second
+setInterval(updateCountdown, 1000);
+updateCountdown(); // Call it once to initialize
