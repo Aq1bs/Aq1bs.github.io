@@ -12,6 +12,73 @@ body {
 
 
 #logo-container {
+  position: relative;
+  text-align: center; /* Center the logo */
+  margin-top: 10px; /* Add space between logo and heading */
+}
+
+#logo {
+  width: 100px; /* Resize for smaller screens */
+  height: auto; /* Maintain proportions */
+}
+
+
+h1 {
+  margin-top: 20px; /* Push the heading down */
+  font-size: 18px; /* Resize heading for smaller screens */
+}
+
+@media (max-width: 768px) {
+  #logo {
+    display: block;
+    margin: 0 auto; /* Center the logo */
+  }
+
+  h1 {
+    margin-top: 40px; /* Add extra space below the logo */
+    font-size: 16px; /* Slightly smaller heading font */
+  }
+}
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 90%; /* Adjust to fit screens */
+  max-width: 1200px; /* Keeps layout clean on larger screens */
+  margin: 0 auto;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  #logo {
+    width: 100px; /* Resize logo for smaller screens */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center the logo */
+  }
+
+  table {
+    width: 100%; /* Ensure the timetable fits */
+    font-size: 12px; /* Adjust text size */
+  }
+
+  table th, table td {
+    padding: 5px; /* Reduce padding for compact display */
+  }
+
+  #logo-container {
+    text-align: center; /* Center-align the logo container */
+  }
+}
+
+
+
+
+#logo-container {
   position: absolute; /* Or relative if needed */
   top: 10px; /* Adjust to move vertically */
   left: 10px; /* Adjust to move horizontally */
