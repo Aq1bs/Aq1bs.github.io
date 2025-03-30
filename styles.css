@@ -8,6 +8,22 @@ body {
   margin: 0;
 }
 
+
+
+
+#logo-container {
+  position: absolute; /* Or relative if needed */
+  top: 10px; /* Adjust to move vertically */
+  left: 10px; /* Adjust to move horizontally */
+}
+
+#logo {
+  width: 150px; /* Adjust the size */
+  height: auto; /* Keeps the proportions correct */
+}
+
+
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
