@@ -1,70 +1,46 @@
-// Function to update and display the current time
-function updateCurrentTime() {
+// Display Current Time
+setInterval(() => {
   const now = new Date();
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-
   document.getElementById("current-time").innerText =
-    `Current Time: ${hours}:${minutes}:${seconds}`;
-}
+    `Current Time: ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+}, 1000);
 
-// Update the current time every second
-setInterval(updateCurrentTime, 1000);
-updateCurrentTime(); // Call it once immediately to display the time right away
-
-// Define all the prayer times for the day
+// Prayer Times
 const prayerTimes = [
-  { name: "Fajr", time: "04:41" },
-  { name: "Sunrise", time: "06:40" },
-  { name: "Dhuhr", time: "13:11" },
-  { name: "Asr", time: "17:34" },
-  { name: "Maghrib", time: "19:44" },
-  { name: "Isha", time: "21:21" }
+  { name: "Fajr", time: "02:18" },
+  { name: "Dhuhr", time: "13:04" },
+  { name: "Asr", time: "18:20" },
+  { name: "Maghrib", time: "20:50" }, 
+  { name: "Isha", time: "22:27" }
 ];
 
-// Function to calculate the next prayer
+// Get Next Prayer
 function getNextPrayer() {
   const now = new Date();
-
-  for (let i = 0; i < prayerTimes.length; i++) {
-    const [hours, minutes] = prayerTimes[i].time.split(":").map(Number);
-    const prayerTime = new Date();
-    prayerTime.setHours(hours, minutes, 0);
-
-    // Check if the prayer is still upcoming today
-    if (prayerTime > now) {
-      return { ...prayerTimes[i], timeObj: prayerTime };
-    }
+  for (const p of prayerTimes) {
+    const [h, m] = p.time.split(":").map(Number);
+    const prayerTime = new Date(); prayerTime.setHours(h, m, 0);
+    if (prayerTime > now) return { ...p, timeObj: prayerTime };
   }
 
-  // If all today's prayers are over, return the first prayer for tomorrow
-  const [hours, minutes] = prayerTimes[0].time.split(":").map(Number);
-  const nextDayPrayerTime = new Date();
-  nextDayPrayerTime.setDate(now.getDate() + 1);
-  nextDayPrayerTime.setHours(hours, minutes, 0);
-
-  return { ...prayerTimes[0], timeObj: nextDayPrayerTime };
+  // Move to next day's Fajr after Isha
+  const [h, m] = prayerTimes[0].time.split(":").map(Number);
+  const nextDayFajr = new Date();
+  nextDayFajr.setDate(now.getDate() + 1); nextDayFajr.setHours(h, m, 0);
+  return { ...prayerTimes[0], timeObj: nextDayFajr };
 }
 
-// Function to update the prayer countdown
-function updateCountdown() {
+// Update Countdown
+setInterval(() => {
   const { name, timeObj } = getNextPrayer();
-  const now = new Date();
-  const timeDiff = timeObj - now;
-
+  const now = new Date(), timeDiff = timeObj - now;
   if (timeDiff > 0) {
-    const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+    const hours = Math.floor((timeDiff / 3600000) % 24);
+    const minutes = Math.floor((timeDiff / 60000) % 60);
     const seconds = Math.floor((timeDiff / 1000) % 60);
-
     document.getElementById("countdown").innerText =
       `🕌 ${name} is in ${hours}h ${minutes}m ${seconds}s 🕌`;
   } else {
     document.getElementById("countdown").innerText = "It's time for prayer!";
   }
-}
-
-// Update the countdown every second
-setInterval(updateCountdown, 1000);
-updateCountdown(); // Call it once to initialize
+}, 1000);
