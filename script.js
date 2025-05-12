@@ -7,11 +7,11 @@ setInterval(() => {
 
 // Prayer Times
 const prayerTimes = [
-  { name: "Fajr", time: "02:18" },
-  { name: "Dhuhr", time: "13:04" },
-  { name: "Asr", time: "18:20" },
+  { name: "Fajr", time: "02:00" },
+  { name: "Dhuhr", time: "13:03" },
+  { name: "Asr", time: "21:00" },
   { name: "Maghrib", time: "20:50" }, 
-  { name: "Isha", time: "22:27" }
+  { name: "Isha", time: "22:30" }
 ];
 
 // Get Next Prayer
