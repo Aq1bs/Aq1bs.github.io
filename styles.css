@@ -179,21 +179,10 @@ th {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for style */
 }
 
-/* No Eating Image Container */
-#no-eating-container {
-  display: flex;
-  justify-content: space-between; /* Aligns images to the left and right */
-  align-items: center;
-  margin-top: 20px; /* Adds spacing above the images */
-}
 
-/* Shared Image Styling */
-.no-eating-image {
-  width: 100px; /* Adjust image size as needed */
-  animation: pulse 1s infinite; /* Add pulsing effect */
 
   
-}
+
 
 
 
