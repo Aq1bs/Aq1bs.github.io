@@ -45,8 +45,16 @@ body {
 }
 
 .special {
-  font-size: 70px; /* Makes text bigger */
+  font-size: 30; /* Makes text bigger */
   color: rgb(243, 1, 231); /* Changes text color */
+  font-weight: bold; /* Makes text stand out */
+}
+
+
+
+.cool {
+  font-size: 30; /* Makes text bigger */
+  color: rgb(113, 8, 145); /* Changes text color */
   font-weight: bold; /* Makes text stand out */
 }
 
