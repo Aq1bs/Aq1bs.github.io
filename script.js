@@ -8,6 +8,17 @@ setInterval(() => {
     `Current Time: ${hh}:${mm}:${ss}`;
 }, 1000);
 
+
+
+// Display Gregorian Date
+const dateEl = document.getElementById("gregorian-date");
+const today = new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+dateEl.textContent = `📅 Today is ${today.toLocaleDateString('en-GB', options)}`;
+
+
+
+
 // Static Prayer Times Array  In The ""  Type The Time Using 24 Hour Format
 const prayerTimes = [
   { name: "Fajr", time: "" },
