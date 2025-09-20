@@ -8,13 +8,13 @@ setInterval(() => {
     `Current Time: ${hh}:${mm}:${ss}`;
 }, 1000);
 
-// Static Prayer Times Array
+// Static Prayer Times Array  In The ""  Type The Time Using 24 Hour Format
 const prayerTimes = [
-  { name: "Fajr", time: "02:00" },
-  { name: "Dhuhr", time: "13:03" },
-  { name: "Asr", time: "18:33" },
-  { name: "Maghrib", time: "21:13" },
-  { name: "Isha", time: "22:30" }
+  { name: "Fajr", time: "" },
+  { name: "Dhuhr", time: "" },
+  { name: "Asr", time: "" },
+  { name: "Maghrib", time: "" },
+  { name: "Isha", time: "" }
 ];
 
 // Find Next Prayer
@@ -36,7 +36,7 @@ function getNextPrayer() {
   return { ...prayerTimes[0], timeObj: nextFajr };
 }
 
-// Update Countdown
+// Update Countdown (Where it says no data in ramadan coppy n paste this "🕌 It's time for prayer! 🕌")
 setInterval(() => {
   const { name, timeObj } = getNextPrayer();
   const diff = timeObj - new Date();
@@ -48,6 +48,6 @@ setInterval(() => {
       `🕌 ${name} is in ${hrs}h ${mins}m ${secs}s 🕌`;
   } else {
     document.getElementById("countdown").innerText =
-      "🕌 It's time for prayer! 🕌";
+      "🕌 No data 🕌";
   }
 }, 1000);
