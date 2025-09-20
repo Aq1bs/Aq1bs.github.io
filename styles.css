@@ -1,202 +1,88 @@
-/* General Body Styles */
-body {
-  font-family: Arial, sans-serif;
-  text-align: center; /* Ensures text is centered within elements */
-  background-color: #f4f4f9;
-  color: #333;
-  padding: 20px;
+/* Base & Body */
+* {
+  box-sizing: border-box;
   margin: 0;
-
+  padding: 0;
 }
-
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  width: 90%; /* Adjust to fit screens */
-  max-width: 1200px; /* Keeps layout clean on larger screens */
-  margin: 0 auto;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  #logo {
-    width: 100px; /* Resize logo for smaller screens */
-    height: auto;
-    display: block;
-    margin: 0 auto; /* Center the logo */
-  }
-
-  table {
-    width: 100%; /* Ensure the timetable fits */
-    font-size: 12px; /* Adjust text size */
-  }
-
-  table th, table td {
-    padding: 5px; /* Reduce padding for compact display */
-  }
-
-  #logo-container {
-    text-align: center; /* Center-align the logo container */
-  }
-}
-
-.special {
-  font-size: 30; /* Makes text bigger */
-  color: rgb(243, 1, 231); /* Changes text color */
-  font-weight: bold; /* Makes text stand out */
-}
-
-
-
-.cool {
-  font-size: 30; /* Makes text bigger */
-  color: rgb(113, 8, 145); /* Changes text color */
-  font-weight: bold; /* Makes text stand out */
-}
-
-
-#logo-container {
-  position: absolute; /* Or relative if needed */
-  top: 10px; /* Adjust to move vertically */
-  left: 10px; /* Adjust to move horizontally */
-}
-
-#logo {
-  width: 150px; /* Adjust the size */
-  height: auto; /* Keeps the proportions correct */
-}
-
-
-
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #f4e4c4; /* Soft light yellow tint */
+  background-color: #f4e4c4;
   color: #333;
   padding: 20px;
-  margin: 0;
 }
 
-/* Center Current Time and Countdown */
-.current-time, .countdown {
-  margin: 20px auto; /* Centers horizontally and adds spacing */
-  text-align: center; /* Centers text alignment */
-
-  /* Current Time Styling */
-  font-size: 3rem; /* Increased font size for more emphasis */
-  font-weight: bold; /* Keeps the text bold */
-  color: #0066cc; /* Blue color for contrast (if applicable) */
-  margin-bottom: 20px; /* Adds spacing below the current time */
-  text-align: center; /* Ensures it's centered */
-}
-
-
-
-/* Table Styles (kept as is for reference) */
-table {
-  background-color: #efc701; /* Cream background */
-  border-collapse: collapse;
-  width: 60%; /* Adjust table width */
-  margin: 20px auto; /* Center the table */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-
-    border: 1px solid #ddd; /* Keep the table borders */
-    padding: 10px; /* Spacing inside each cell */
-    text-align: center; /* Center the text */
-    font-size: 2rem; /* Increase this value for larger text */
-  
-}
-
-th {
-  background-color: #f0f8ff; /* Light blue header */
-  color: #333;
-  font-weight: bold;
-}
-
-
-table {
-  background-color: #fffdd0; /* Cream background color */
-  border-collapse: collapse; /* Ensures borders don't double up */
-  width: 100%; /* Makes the table take up the full width of its container */
-  margin: 20px 0; /* Adds spacing above and below the table */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
-  border-radius: 10px; /* Rounded corners for a sleek look */
-  overflow: hidden; /* Ensures corners apply properly */
-}
-
-/* Style the table rows and cells */
-table th, table td {
-  padding: 12px; /* Adds space inside cells */
-  text-align: center; /* Centers the text */
-  border: 1px solid #ddd; /* Light grey border between cells */
-}
-
-/* Style the table header */
-table th {
-  background-color: #f0e68c; /* Slightly darker cream for the header */
-  font-weight: bold;
-}
-
-
-
+/* Headings & Text */
 h1 {
   color: #0066cc;
+  margin-bottom: 0.5em;
+}
+.special {
+  font-size: 30px;
+  color: rgb(243, 1, 231);
+  font-weight: bold;
+}
+.cool {
+  font-size: 30px;
+  color: rgb(113, 8, 145);
+  font-weight: bold;
+  margin-bottom: 1em;
 }
 
-table {
-  margin: 20px auto;
-  border-collapse: collapse;
-  width: 60%;
+/* Live Time & Countdown */
+.current-time {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0066cc;
+  margin-bottom: 0.5em;
 }
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-th {
-  background-color: #f0f8ff;
-  color: #333;
-}
-
-
-
-  /* Countdown Timer Styling */
 .countdown {
-  background-color: #fffdd0; /* Cream background */
-  border-radius: 20px; /* Rounded corners */
-  padding: 20px; /* Extra padding for spacing */
-  color: red; /* Bold red text */
-  font-size: 3rem; /* Larger font size—make this even bigger if needed */
-  font-weight: bold; /* Keep the text bold */
-  text-align: center; /* Ensure text is centered */
-  display: inline-block; /* Keep the box around the text compact */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for style */
+  font-size: 2rem;
+  font-weight: bold;
+  color: red;
+  background-color: #fffdd0;
+  border-radius: 20px;
+  padding: 10px 20px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5em;
 }
 
+/* Table */
+table {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 2em;
+  border-collapse: collapse;
+  background-color: #fffdd0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+  font-size: 1.2rem;
+}
+th {
+  background-color: #f0e68c;
+  font-weight: bold;
+}
 
-
-  
-
-
-
-
-
-
+/* Image */
 img {
-  margin-top: 100px; /* Moves image down */
-  
+  margin-top: 2em;
+  max-width: 150px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .current-time, .countdown {
+    font-size: 1.5rem;
+  }
+  th, td {
+    font-size: 1rem;
+    padding: 8px;
+  }
 }
