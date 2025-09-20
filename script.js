@@ -50,4 +50,35 @@ setInterval(() => {
     document.getElementById("countdown").innerText =
       "🕌 No data 🕌";
   }
+
+
+
+// Weather Box
+async function loadWeather() {
+  const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=53.65&longitude=-1.78&current_weather=true');
+  const data = await res.json();
+  const w = data.current_weather;
+  const temp = Math.round(w.temperature);
+  const wind = Math.round(w.windspeed);
+  const code = w.weathercode;
+
+  const conditions = {
+    0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+    45: "Fog", 48: "Depositing rime fog", 51: "Light drizzle", 61: "Light rain",
+    71: "Light snow", 80: "Rain showers", 95: "Thunderstorm"
+  };
+
+  const desc = conditions[code] || "Unknown";
+  document.getElementById("weather-box").innerHTML =
+    `🌦️ <strong>Huddersfield Weather</strong><br>
+     ${desc}<br>
+     🌡️ ${temp}°C<br>
+     💨 Wind: ${wind} km/h`;
+}
+loadWeather();
+
+
+
+
+
 }, 1000);
