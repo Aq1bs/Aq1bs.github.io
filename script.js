@@ -10,12 +10,6 @@ setInterval(() => {
 
 
 
-// Display Gregorian Date
-const dateEl = document.getElementById("gregorian-date");
-const today = new Date();
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-dateEl.textContent = `📅 Today is ${today.toLocaleDateString('en-GB', options)}`;
-
 
 
 
