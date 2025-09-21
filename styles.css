@@ -109,18 +109,6 @@ body {
 }
 
 
-.weather-box {
-  background-color: #fffdd0;
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 400px;
-  font-size: 1.2rem;
-  color: #333;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-
 .table {
   box-shadow: 0 0 1000px rgba(255, 223, 186, 0.5);
 }
@@ -154,6 +142,17 @@ img {
   max-width: 150px;
 }
 
+
+
+
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 3em;
+  margin-top: 2em;
+  margin-bottom: 2em; /* ← this creates the space */
+}
 
 
 .tv-bar {
@@ -191,6 +190,12 @@ img {
 .tv-bar marquee {
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
 }
+
+
+
+
+
+
 
 body {
   padding-bottom: 100px; /* Adjust the value as needed */
