@@ -4,6 +4,49 @@
   margin: 0;
   padding: 0;
 }
+
+.bismillah {
+  margin-bottom: 50px; /* Adjust this number to your liking */
+}
+
+
+@font-face {
+  font-family: 'AraQuran';
+  src: url('../fonts/AraQuranIslamic4D-K7n4W.ttf') format('truetype');
+}
+
+.bismillah {
+  font-family: 'AraQuran', serif;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 30px;
+  color: #450bb0;
+  animation: fadeIn 2s ease-out;
+}
+
+
+.bismillah {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.bismillah {
+  font-family: 'AraQuran', serif;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 30px;
+  color: #0066cc;
+  opacity: 0;
+  animation: fadeIn 2.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -14,7 +57,7 @@ body {
 
 /* Headings & Text */
 h1 {
-  color: #0066cc;
+  color: #1a3f63;
   margin-bottom: 0.5em;
 }
 .special {

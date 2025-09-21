@@ -1,4 +1,13 @@
+
+
+
+setTimeout(() => {
+  document.querySelector('.bismillah').style.opacity = '0';
+}, 5000);
+
+
 // Display Current Time
+
 setInterval(() => {
   const now = new Date();
   const hh = now.getHours().toString().padStart(2, "0");
