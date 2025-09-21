@@ -5,6 +5,7 @@
   padding: 0;
 }
 
+
 .bismillah {
   margin-bottom: 50px; /* Adjust this number to your liking */
 }
@@ -65,12 +66,14 @@ h1 {
   color: rgb(243, 1, 231);
   font-weight: bold;
 }
+
+
 .cool {
-  font-size: 30px;
-  color: rgb(113, 8, 145);
+  font-size: 20px;
+  color: rgb(0, 15, 230);
   font-weight: bold;
-  margin-bottom: 1em;
 }
+
 
 .date-display {
   font-size: 1.2rem;
@@ -100,6 +103,12 @@ h1 {
 
 
 
+body {
+  background: linear-gradient(to bottom, #f1e07e, #fcc75d);
+  background-attachment: fixed;
+}
+
+
 .weather-box {
   background-color: #fffdd0;
   border-radius: 20px;
@@ -112,7 +121,9 @@ h1 {
 }
 
 
-
+.table {
+  box-shadow: 0 0 1000px rgba(255, 223, 186, 0.5);
+}
 
 
 /* Table */
@@ -143,13 +154,44 @@ img {
   max-width: 150px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .current-time, .countdown {
-    font-size: 1.5rem;
-  }
-  th, td {
-    font-size: 1rem;
-    padding: 8px;
-  }
+
+
+.tv-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fda409;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.badge {
+  background-color: #0066cc;
+  color: rgb(255, 255, 255);
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.tv-bar marquee {
+  font-family: 'Quicksand', sans-serif; /* or 'Merriweather', serif */
+  font-size: 1.1rem;
+  color: #2c2c2c; /* deep readable tone */
+  padding-left: 10px;
+  white-space: nowrap;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.tv-bar marquee {
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+body {
+  padding-bottom: 100px; /* Adjust the value as needed */
 }

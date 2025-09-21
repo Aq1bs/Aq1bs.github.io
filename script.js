@@ -1,11 +1,4 @@
 
-
-
-setTimeout(() => {
-  document.querySelector('.bismillah').style.opacity = '0';
-}, 5000);
-
-
 // Display Current Time
 
 setInterval(() => {
@@ -62,7 +55,7 @@ setInterval(() => {
       `🕌 ${name} is in ${hrs}h ${mins}m ${secs}s 🕌`;
   } else {
     document.getElementById("countdown").innerText =
-      "🕌 No data 🕌";
+      "🕌 Al-Hira Centre 🕌";
   }
 
 
