@@ -5,12 +5,27 @@
   padding: 0;
 }
 
-
-.bismillah {
-  margin-bottom: 50px; /* Adjust this number to your liking */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 2em;
 }
 
+.logo {
+  max-width: 100px;
+  height: auto;
+  flex-shrink: 0;
+}
 
+.bismillah {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #006600;
+  margin: 0;
+  font-family: 'Scheherazade New', serif; /* optional Arabic font */
+}
 @font-face {
   font-family: 'AraQuran';
   src: url('../fonts/AraQuranIslamic4D-K7n4W.ttf') format('truetype');
