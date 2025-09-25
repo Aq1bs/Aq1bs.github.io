@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const prayerTimes = [
-    { name: "Fajr", time: "" },
+    { name: "Fajr", time: "05:01" },
     { name: "Dhuhr", time: "" },
     { name: "Asr", time: "" },
     { name: "Maghrib", time: "" },
