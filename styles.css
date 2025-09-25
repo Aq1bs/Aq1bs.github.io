@@ -110,21 +110,30 @@ h1 {
   display: flex;
 }
 
+
 #timetablePopup {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+
+
+#timetableModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: contain; /* shows the whole image without cropping */
-}
-/* Close button */
-#closeModal {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 36px;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 10000;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 
@@ -136,6 +145,26 @@ h1 {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+
+
+#closeModal {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 36px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 10000;
+  transition: color 0.3s ease;
+}
+
+#closeModal:hover {
+  color: #ffaaaa;
+}
+
+
 
 #current-time {
   font-family: 'Segoe UI', sans-serif;
