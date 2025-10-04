@@ -87,6 +87,7 @@ h1 {
   font-size: 20px;
   color: rgb(0, 15, 230);
   font-weight: bold;
+  margin-top: 20px;   /* adds space above */
 }
 
 
@@ -112,13 +113,14 @@ h1 {
 
 
 #timetablePopup {
-  max-width: 100vw;
-  max-height: 100vh;
+  max-width: 90vw;   /* instead of 100vw */
+  max-height: 80vh;  /* instead of 100vh */
   width: auto;
   height: auto;
   object-fit: contain;
   display: block;
   margin: auto;
+  border-radius: 8px; /* optional: gives it softer edges */
 }
 
 
