@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hours = Math.floor(totalSec / 3600);
     const minutes = Math.floor((totalSec % 3600) / 60);
     const seconds = totalSec % 60;
-    container.innerText = `Next: ${next.name} at ${next.timeStr} on ${next.date} — in ${hours}h ${minutes}m ${seconds}s`;
+  container.innerHTML = `Next: ${next.name} at ${next.timeStr} — in ${hours}h ${minutes}m ${seconds}s <span style="font-size: 0.8em; color: #666;">(${next.date})</span>`;
     container.className = "";
   }
 
