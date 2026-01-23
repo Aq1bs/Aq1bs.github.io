@@ -1,131 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome | Al-Hira Education Centre</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center; /* center horizontally */
+      align-items: center;     /* center vertically */
+      background: url('hello.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Poppins', sans-serif;
+    }
+
+   .countdown {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 50px;
+  border-radius: 20px;
+  color: #FFD700; /* gold */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+  transform: translateX(-20px); /* just a subtle nudge left */
+}
+
+    .time {
+      display: flex;
+      gap: 30px; /* more spacing between units */
+    }
+
+    .flip-unit {
+      position: relative;
+      width: 130px;   /* bigger width */
+      height: 160px;  /* bigger height */
+      perspective: 1000px;
+    }
+
+    .flip-card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #FFD700;
+      font-size: 3.5rem; /* larger font */
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: inset 0 -5px 0 #FFD700;
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease;
+    }
+
+    .label {
+      text-align: center;
+      margin-top: 170px; /* adjusted for taller cards */
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
-
-
-
 <body>
+  <div class="countdown">
+    <div class="time">
+      <div class="flip-unit">
+        <div id="days" class="flip-card">00</div>
+        <div class="label">Days</div>
+      </div>
+      <div class="flip-unit">
+        <div id="hours" class="flip-card">00</div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="flip-unit">
+        <div id="minutes" class="flip-card">00</div>
+        <div class="label">Minutes</div>
+      </div>
+    </div>
+  </div>
 
+  <script>
+    const targetDate = new Date("2026-02-01T00:00:00").getTime();
 
-<nav class="top-nav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="videos.html">Videos</a></li>
-    <li><a href="prayer.html">Prayer Times</a></li>
-    <li><a href="about.html">About</a></li>
-  </ul>
-</nav>  <header>
+    let lastDays, lastHours, lastMinutes;
 
+    function flip(id, newVal) {
+      const card = document.getElementById(id);
+      card.style.transform = "rotateX(-90deg)";
+      setTimeout(() => {
+        card.innerText = newVal;
+        card.style.transform = "rotateX(0deg)";
+      }, 200);
+    }
 
-<div class="header-row">
-  <img src="al_hira_centre_logo.png" alt="Al-Hira Centre Huddersfield Logo" class="logo">
-  <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-</div>
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-    <h1>Welcome to the Al-Hira Education Centre</h1>
-    <p>A space of presence, prayer, and peace</p>
-  </header>
+      if (distance < 0) {
+        document.querySelector(".time").innerHTML = "<h2>Event Started</h2>";
+        return;
+      }
 
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
+      if (days !== lastDays) {
+        flip("days", days);
+        lastDays = days;
+      }
+      if (hours !== lastHours) {
+        flip("hours", hours);
+        lastHours = hours;
+      }
+      if (minutes !== lastMinutes) {
+        flip("minutes", minutes);
+        lastMinutes = minutes;
+      }
+    }
 
-
-
-  <p class="special">Timetable as of October 2025.</p>
- <!-- HTML Element to Display Time -->
-<div id="current-time"></div>
-<div id="next-prayer"></div>
-
-
-
-
-
-
-<div style="margin-top: 40px;"></div>
-
-
-  <table>
-    <tr>
-      <th>Prayer</th>
-      <th>Time</th>
-    </tr>
-    <tr>
-      <td>Fajr</td>
-      <td>No Data</td>
-    </tr>
-    <tr>
-      <td>Dhuhr</td>
-      <td>No Data</td>
-    </tr>
-    <tr>
-      <td>Asr</td>
-      <td>No Data</td>
-    </tr>
-    <tr>
-      <td>Maghrib</td>
-      <td>No Data</td>
-    </tr>
-    <tr>
-      <td>Isha</td>
-      <td>No Data</td>
-    </tr>
-  </table>
-
-
-
-<div class="social-links">
-  <a href="https://www.facebook.com/SuffahFoundation/" target="_blank" aria-label="Facebook">
-    <img src="facebook.png" alt="Facebook">
-  </a>
-  </a>
-  <a href="https://www.youtube.com/@SuffahFoundation" target="_blank" aria-label="YouTube">
-    <img src="youtube.png" alt="YouTube">
-  </a>
-  <a href="https://www.tiktok.com/@suffahfoundation" target="_blank" aria-label="TikTok">
-    <img src="tiktok.png" alt="tiktok">
-  </a>
-  </a>
-  <a href="https://www.instagram.com/suffah_foundation/" target="_blank" aria-label="instagram">
-    <img src="insta.png" alt="instagram">
-  </a>
-</div>
-
-  
-
-<p><strong>Powered by:</strong> HyperText Markup Language (HTML), JavaScript and Cascading Style Sheets (CSS) </p>
-
-
-
-
-<div id="lanternTrail"></div>
-
-
-<button id="backToTop" title="Back to Top">↑</button>
-
-
-  <footer>
-    <p>&copy; 2025 Al-Hira Education Centre </p>
-  </footer>
-
-
-
-<div class="tv-bar">
-  <div class="badge">Notices</div>
-  <marquee direction="left" scrollamount="3" behavior="scroll">
-     Donate Now:   Al Hira Educational Centre &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Sort Code: 30-64-10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account: 34642160 &nbsp;&nbsp;&nbsp;&nbsp; (May Allah Reward You For Donation Ameen) &nbsp;&nbsp;&nbsp;&nbsp;  🌙 Announcements:   🕊️ “Prayer times updated for October 2025.”  &nbsp;&nbsp;Jumma Time 14:00&nbsp;&nbsp;(Back To Basics Weekly Islamic Study Class) Every Thursday at 19:00. 🕋   
-  </marquee>
-</div>
-
-
-
-
-
-
-  <script src="script.js"></script>
-
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
