@@ -48,44 +48,44 @@
 }
 
 
-   /* Black rounded box */
+/* Black rounded box */
 .clock-box {
     background: rgba(0,0,0,0.75);
-    padding: 20px 32px; /* slightly smaller */
-    border-radius: 18px;
+    padding: 26px 40px; /* slightly larger again */
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-    transform: translateX(-40px); /* adjust this number */
-
+    align-items: center;
     box-shadow: 0 0 25px rgba(0,0,0,0.6);
     z-index: 10;
+    transform: translateX(-40px); /* keep your left shift */
 }
 
 /* Digital numbers */
 .digits {
-    font-size: 3.6rem; /* smaller than 4.5rem */
-    letter-spacing: 3px;
+    font-size: 4.2rem; /* bigger again */
+    letter-spacing: 4px;
     color: #FFD700;
-    text-shadow: 0 0 18px rgba(255,215,0,0.9);
+    text-shadow: 0 0 22px rgba(255,215,0,0.9);
     font-weight: 700;
 }
 
 /* Bold gold labels */
 .labels {
-    margin-top: 8px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     width: 100%;
     color: #FFD700;
     font-weight: 800;
-    font-size: 0.9rem; /* slightly smaller */
-    text-shadow: 0 0 8px rgba(255,215,0,0.8);
+    font-size: 1rem; /* bold + readable */
+    text-shadow: 0 0 10px rgba(255,215,0,0.8);
 }
 
 .labels span {
     flex: 1;
-    transform: translateX(-40px); /* adjust this number */
-
+    text-align: center;
+}
 }
 
     .labels span {
