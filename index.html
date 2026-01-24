@@ -2,39 +2,244 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Countdown</title>
+  <title>Extreme Majestic Countdown</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    body {
       height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       display: flex;
-      justify-content: center; /* center horizontally */
-      align-items: center;     /* center vertically */
+      justify-content: center;
+      align-items: center;
       background: url('hello.png') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Poppins', sans-serif;
+      position: relative;
     }
 
-   .countdown {
-  background: rgba(0, 0, 0, 0.85);
-  padding: 50px;
-  border-radius: 20px;
-  color: #FFD700; /* gold */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-  transform: translateX(-20px); /* just a subtle nudge left */
-}
+    /* Starfield layers */
+    .star-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-repeat: repeat;
+      mix-blend-mode: screen;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .star-layer.layer1 {
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.6), transparent 60%),
+        radial-gradient(2px 2px at 80% 70%, rgba(255,255,255,0.5), transparent 60%);
+      animation: starDrift1 60s linear infinite;
+    }
+
+    .star-layer.layer2 {
+      background-image:
+        radial-gradient(1.5px 1.5px at 30% 80%, rgba(255,215,0,0.7), transparent 60%),
+        radial-gradient(1.5px 1.5px at 60% 30%, rgba(255,255,255,0.5), transparent 60%);
+      animation: starDrift2 90s linear infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes starDrift1 {
+      0% { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(-60px,-30px,0); }
+    }
+
+    @keyframes starDrift2 {
+      0% { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(40px,-50px,0); }
+    }
+
+    /* Aurora-style gold waves (strong) */
+    .aurora {
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,215,0,0.35), transparent 70%),
+        radial-gradient(circle at 80% 90%, rgba(255,215,0,0.30), transparent 70%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25), transparent 70%),
+        radial-gradient(circle at 10% 80%, rgba(255,215,0,0.28), transparent 70%),
+        radial-gradient(circle at 90% 20%, rgba(255,215,0,0.22), transparent 70%);
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      pointer-events: none;
+      animation: auroraMove 18s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    @keyframes auroraMove {
+      0% { transform: translate3d(-20px, -10px, 0) scale(1.1); }
+      50% { transform: translate3d(20px, 10px, 0) scale(1.2); }
+      100% { transform: translate3d(-10px, 5px, 0) scale(1.15); }
+    }
+
+    /* Volumetric light rays (strong) */
+    .light-rays {
+      position: absolute;
+      inset: -10%;
+      pointer-events: none;
+      background:
+        conic-gradient(from 180deg,
+          rgba(255,215,0,0.35),
+          transparent 15%,
+          rgba(255,215,0,0.25),
+          transparent 35%,
+          rgba(255,215,0,0.35),
+          transparent 55%,
+          rgba(255,215,0,0.25),
+          transparent 75%,
+          rgba(255,215,0,0.35));
+      mix-blend-mode: screen;
+      opacity: 0.75;
+      animation: raysRotate 40s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes raysRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Floating gold particles */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #FFD700;
+      border-radius: 50%;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: floatUp 10s linear infinite;
+      z-index: 2;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-120vh) scale(0.2); opacity: 0; }
+    }
+
+    /* Floating geometric shapes from bottom */
+    .geo {
+      position: absolute;
+      bottom: -50px;
+      font-size: 1.8rem;
+      color: #FFD700;
+      opacity: 0.85;
+      pointer-events: none;
+      animation: geoFloat 12s linear infinite;
+      z-index: 2;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    @keyframes geoFloat {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(-140vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Floating crescents */
+    .crescent {
+      position: absolute;
+      bottom: -60px;
+      font-size: 2.2rem;
+      color: #FFD700;
+      opacity: 0.9;
+      pointer-events: none;
+      animation: crescentFloat 14s linear infinite;
+      z-index: 2;
+      text-shadow: 0 0 12px rgba(0,0,0,0.9);
+    }
+
+    @keyframes crescentFloat {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(-150vh) rotate(-360deg); opacity: 0; }
+    }
+
+    /* Floating calligraphy */
+    .callig {
+      position: absolute;
+      bottom: -40px;
+      font-size: 2.6rem;
+      color: #FFD700;
+      opacity: 0.95;
+      pointer-events: none;
+      animation: calligFloat 16s ease-out forwards;
+      text-shadow: 0 0 14px rgba(0,0,0,0.9);
+      z-index: 2;
+    }
+
+    @keyframes calligFloat {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      80% { transform: translateY(-120vh); opacity: 1; }
+      100% { transform: translateY(-140vh); opacity: 0; }
+    }
+
+    /* Countdown container */
+    .countdown-wrapper {
+      position: relative;
+      z-index: 5;
+    }
+
+    .countdown {
+      position: relative;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 40px 55px;
+      border-radius: 22px;
+      color: #FFD700;
+      box-shadow: 0 14px 32px rgba(0,0,0,0.9);
+      transform: translateX(-20px);
+      transition: box-shadow 1s ease, transform 1s ease;
+      overflow: visible;
+    }
+
+    /* Rotating mandala behind countdown */
+    .mandala {
+      position: absolute;
+      inset: -70px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,215,0,0.18);
+      box-shadow:
+        0 0 40px rgba(255,215,0,0.15),
+        0 0 80px rgba(0,0,0,0.9);
+      pointer-events: none;
+      opacity: 0.7;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,215,0,0.18), transparent 60%),
+        conic-gradient(from 0deg,
+          rgba(255,215,0,0.3),
+          transparent 40%,
+          rgba(255,215,0,0.3),
+          transparent 80%,
+          rgba(255,215,0,0.3));
+      mix-blend-mode: screen;
+      animation: mandalaRotate 90s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes mandalaRotate {
+      0% { transform: rotate(0deg) scale(1); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
 
     .time {
       display: flex;
-      gap: 30px; /* more spacing between units */
+      gap: 26px;
     }
 
     .flip-unit {
       position: relative;
-      width: 130px;   /* bigger width */
-      height: 160px;  /* bigger height */
-      perspective: 1000px;
+      width: 125px;
+      height: 165px;
+      perspective: 1200px;
     }
 
     .flip-card {
@@ -43,47 +248,124 @@
       height: 100%;
       background: #000;
       color: #FFD700;
-      font-size: 3.5rem; /* larger font */
+      font-size: 3.3rem;
       font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 10px;
-      box-shadow: inset 0 -5px 0 #FFD700;
+      box-shadow:
+        inset 0 -5px 0 #FFD700,
+        0 0 18px rgba(0,0,0,0.9);
       transform-style: preserve-3d;
       transition: transform 0.4s ease;
     }
 
     .label {
       text-align: center;
-      margin-top: 170px; /* adjusted for taller cards */
-      font-size: 1.1rem;
+      margin-top: 185px;
+      font-size: 1.05rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+    }
+
+    /* Shimmer sweep */
+    .shimmer {
+      position: absolute;
+      top: 0;
+      left: -200%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,215,0,0.55), transparent);
+      animation: shimmerMove 2s ease;
+      pointer-events: none;
+    }
+
+    @keyframes shimmerMove {
+      0% { left: -200%; }
+      100% { left: 200%; }
+    }
+
+    /* Halo glow */
+    .halo {
+      position: absolute;
+      top: -45px;
+      left: -45px;
+      width: calc(100% + 90px);
+      height: calc(100% + 90px);
+      border-radius: 40px;
+      background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
+      animation: haloFade 3s ease;
+      pointer-events: none;
+    }
+
+    @keyframes haloFade {
+      0% { opacity: 0; }
+      40% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Divine flash */
+    .flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255,215,0,0.5), rgba(0,0,0,0.95));
+      pointer-events: none;
+      animation: flashFade 1.8s ease;
+      z-index: 20;
+    }
+
+    @keyframes flashFade {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Breathing aura around box */
+    .breathing {
+      animation: breathingAura 11s ease-in-out infinite;
+    }
+
+    @keyframes breathingAura {
+      0% { transform: translateX(-20px) scale(1); box-shadow: 0 14px 32px rgba(0,0,0,0.9); }
+      50% { transform: translateX(-20px) scale(1.04); box-shadow: 0 0 45px rgba(255,215,0,0.6); }
+      100% { transform: translateX(-20px) scale(1); box-shadow: 0 14px 32px rgba(0,0,0,0.9); }
     }
   </style>
 </head>
 <body>
-  <div class="countdown">
-    <div class="time">
-      <div class="flip-unit">
-        <div id="days" class="flip-card">00</div>
-        <div class="label">Days</div>
-      </div>
-      <div class="flip-unit">
-        <div id="hours" class="flip-card">00</div>
-        <div class="label">Hours</div>
-      </div>
-      <div class="flip-unit">
-        <div id="minutes" class="flip-card">00</div>
-        <div class="label">Minutes</div>
+  <!-- Background layers -->
+  <div class="star-layer layer1"></div>
+  <div class="star-layer layer2"></div>
+  <div class="aurora"></div>
+  <div class="light-rays"></div>
+
+  <!-- Particles container -->
+  <div id="particles"></div>
+
+  <div class="countdown-wrapper">
+    <div class="countdown breathing" id="countdownBox">
+      <div class="mandala"></div>
+      <div class="time">
+        <div class="flip-unit">
+          <div id="days" class="flip-card">00</div>
+          <div class="label">Days</div>
+        </div>
+        <div class="flip-unit">
+          <div id="hours" class="flip-card">00</div>
+          <div class="label">Hours</div>
+        </div>
+        <div class="flip-unit">
+          <div id="minutes" class="flip-card">00</div>
+          <div class="label">Minutes</div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-const targetDate = new Date("2026-03-24T00:00:00").getTime();
-
+    /* COUNTDOWN LOGIC */
+    const targetDate = new Date("2026-03-24T00:00:00").getTime();
     let lastDays, lastHours, lastMinutes;
 
     function flip(id, newVal) {
@@ -108,22 +390,137 @@ const targetDate = new Date("2026-03-24T00:00:00").getTime();
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-      if (days !== lastDays) {
-        flip("days", days);
-        lastDays = days;
-      }
-      if (hours !== lastHours) {
-        flip("hours", hours);
-        lastHours = hours;
-      }
-      if (minutes !== lastMinutes) {
-        flip("minutes", minutes);
-        lastMinutes = minutes;
-      }
+      if (days !== lastDays) { flip("days", days); lastDays = days; }
+      if (hours !== lastHours) { flip("hours", hours); lastHours = hours; }
+      if (minutes !== lastMinutes) { flip("minutes", minutes); lastMinutes = minutes; }
     }
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    /* FLOATING PARTICLES */
+    function createParticle() {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.bottom = "-10px";
+      p.style.animationDuration = 7 + Math.random() * 5 + "s";
+      document.getElementById("particles").appendChild(p);
+      setTimeout(() => p.remove(), 15000);
+    }
+    setInterval(createParticle, 200);
+
+    /* FLOATING GEOMETRIC SHAPES */
+    const shapes = ["✦", "✸", "✺", "✶", "✷"];
+
+    function createGeo() {
+      const g = document.createElement("div");
+      g.classList.add("geo");
+      g.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+      g.style.left = Math.random() * 100 + "vw";
+      g.style.animationDuration = 10 + Math.random() * 6 + "s";
+      document.body.appendChild(g);
+      setTimeout(() => g.remove(), 16000);
+    }
+    setInterval(createGeo, 1200);
+
+    /* FLOATING CRESCENTS */
+    function createCrescent() {
+      const c = document.createElement("div");
+      c.classList.add("crescent");
+      c.innerText = "☾";
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.animationDuration = 12 + Math.random() * 6 + "s";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 17000);
+    }
+    setInterval(createCrescent, 3500);
+
+    /* FLOATING CALLIGRAPHY */
+    const words = [
+      "الله",
+      "محمد ﷺ",
+      "مكة المكرمة",
+      "المدينة المنورة",
+      "الرحمن",
+      "الرحيم",
+      "السلام",
+      "النور",
+      "الملك",
+      "القدوس",
+      "الغفور",
+      "الشكور",
+      "الهادي",
+      "الصبور"
+    ];
+
+    function createCallig() {
+      const el = document.createElement("div");
+      el.classList.add("callig");
+      el.innerText = words[Math.floor(Math.random() * words.length)];
+      el.style.left = (15 + Math.random() * 70) + "vw";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 18000);
+    }
+    setInterval(createCallig, 18000);
+
+    /* RANDOM LUXURY EVENTS */
+    function shimmerSweep() {
+      const box = document.getElementById("countdownBox");
+      const shimmer = document.createElement("div");
+      shimmer.classList.add("shimmer");
+      box.appendChild(shimmer);
+      setTimeout(() => shimmer.remove(), 2200);
+    }
+
+    function haloGlow() {
+      const box = document.getElementById("countdownBox");
+      const halo = document.createElement("div");
+      halo.classList.add("halo");
+      box.appendChild(halo);
+      setTimeout(() => halo.remove(), 3200);
+    }
+
+    function divineFlash() {
+      const flash = document.createElement("div");
+      flash.classList.add("flash-overlay");
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 1800);
+    }
+
+    function burstParticles(count = 25) {
+      for (let i = 0; i < count; i++) createParticle();
+    }
+
+    function randomLuxuryEvent() {
+      const eventType = Math.floor(Math.random() * 7);
+
+      if (eventType === 0) shimmerSweep();
+      if (eventType === 1) haloGlow();
+      if (eventType === 2) divineFlash();
+      if (eventType === 3) burstParticles(50);
+      if (eventType === 4) { shimmerSweep(); haloGlow(); }
+      if (eventType === 5) { haloGlow(); divineFlash(); }
+      if (eventType === 6) { shimmerSweep(); burstParticles(40); }
+    }
+
+    setInterval(randomLuxuryEvent, 12000);
+    randomLuxuryEvent();
+
+    /* Extra periodic big burst */
+    setInterval(() => {
+      burstParticles(80);
+      shimmerSweep();
+    }, 30000);
+
+    /* Subtle parallax on background */
+    let t = 0;
+    setInterval(() => {
+      t += 0.01;
+      const x = Math.sin(t) * 3;
+      const y = Math.cos(t) * 2;
+      document.body.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
+    }, 100);
   </script>
 </body>
 </html>
