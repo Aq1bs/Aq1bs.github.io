@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Masjid Screen</title>
+
+
+    
+
+<style>
+/* ===========================
+   GLOBAL RESET + BACKGROUND
+   =========================== */
+
+/* ===========================
+   LIVE STREAMS — SMALL + SPREAD OUT + LOWER
+   =========================== */
+
+.live-wrapper {
+    position: fixed;
+    top: 10vh; /* lower than before */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96vw; /* spread almost edge-to-edge */
+    display: flex;
+    justify-content: space-between;
+    gap: 2vw;
+    z-index: 50; /* popup stays above (1000) */
+}
+
+.live-box {
+    width: 22vw; /* small but visible */
+    aspect-ratio: 16 / 9;
+    background: rgba(0,0,0,0.65);
+    border: 2px solid rgba(212,175,55,0.4); /* gold tint */
+    border-radius: 0.7vw;
+    overflow: hidden;
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+}
+
+.live-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: auto;
+}
+
+/* Hide fullscreen button */
+iframe::-webkit-media-controls-fullscreen-button {
+    display: none !important;
+}
+
+
+
+   #hydration-popup {
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: bottom 0.6s ease;
+    z-index: 9999;
+}
+
+#hydration-popup.show {
+    bottom: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: #000;
+    overflow: hidden;
+}
+
+#screen {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("tv-background.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 2vh 2vw;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===========================
+   FLASHING RED BORDER (SEHRI)
+   =========================== */
+#sehri-alert-border {
+    position: absolute;
+    inset: 0;
+    border: 10px solid transparent;
+    pointer-events: none;
+    z-index: 999;
+    display: none;
+}
+
+.flash-border {
+    animation: flashRed 1s infinite;
+}
+
+@keyframes flashRed {
+    0%   { border-color: rgba(255, 0, 0, 0.1); }
+    50%  { border-color: rgba(255, 0, 0, 1); }
+    100% { border-color: rgba(255, 0, 0, 0.1); }
+}
+
+/* ===========================
+   BIG POPUP WARNING (SEHRI)
+   =========================== */
+#sehri-popup {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#sehri-popup-content {
+    background: rgba(255, 0, 0, 0.85);
+    padding: 4vh 6vw;
+    border-radius: 1vw;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 40px rgba(255,0,0,0.8);
+}
+
+#sehri-popup-content h1 {
+    font-size: 3.6vw; /* +20% */
+    margin-bottom: 1vh;
+}
+
+#sehri-popup-content p {
+    font-size: 1.9vw; /* +20% */
+}
+
+/* ===========================
+   TOP BAR
+   =========================== */
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    margin-bottom: 2vh;
+}
+
+#status-left {
+    color: #4cff4c;
+    font-size: 1.8vw; /* was 1.4 */
+    font-weight: 600;
+}
+
+#masjid-name {
+    font-size: 2.6vw; /* was 2 */
+    font-weight: 700;
+    letter-spacing: 0.1vw;
+    text-align: center;
+    flex: 1;
+}
+
+#weather-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    font-size: 1.8vw; /* was 1.4 */
+}
+
+/* ===========================
+   CENTER SECTION
+   =========================== */
+#center-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3vh;
+}
+
+/* CLOCK PANEL */
+#clock-panel {
+    text-align: center;
+    color: #fff;
+    flex: 1;
+}
+
+#clock-time {
+    font-size: 8vw; /* was 6vw */
+    font-weight: 700;
+    letter-spacing: 0.25vw;
+}
+
+#clock-date {
+    font-size: 2.2vw; /* was 1.6 */
+    margin-top: 1vh;
+}
+
+/* ===========================
+   COUNTDOWN BOXES
+   =========================== */
+/* NEW 3‑COLUMN COUNTDOWN LAYOUT */
+/* HORIZONTAL 3‑COLUMN COUNTDOWN LAYOUT */
+#countdowns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5vw;
+    margin-top: 2vh;
+    width: 100%;
+}
+
+.countdown-box {
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 2vh 1.5vw;
+    border-radius: 1vw;
+
+    font-size: 1.9vw;
+    color: #ffd36b;
+    font-weight: 700;
+    text-align: center;
+}
+
+#sehri-timer,
+#iftaar-timer,
+#next-timer {
+    font-size: 2.8vw;
+    font-weight: 800;
+    color: #fff;
+}
+
+
+/* ===========================
+   SIDE PANEL
+   =========================== */
+#side-panel {
+    width: 28%; /* slightly wider */
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.side-pill {
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 2.5vh 1.5vw;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.pill-label {
+    font-size: 1.6vw; /* was 1.2 */
+    opacity: 0.85;
+}
+
+.pill-time {
+    font-size: 2.4vw; /* was 1.8 */
+    font-weight: 700;
+}
+
+/* ===========================
+   PRAYER GRID
+   =========================== */
+#prayer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.8vw; /* slightly bigger */
+    margin-bottom: 3vh;
+}
+
+.prayer-card {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 1vw;
+    padding: 2.5vh 1.5vw;
+    color: #fff;
+}
+
+.prayer-name {
+    font-size: 1.9vw; /* was 1.4 */
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 1.2vh;
+}
+
+.prayer-times {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time-main {
+    font-size: 2.8vw; /* was 2 */
+    font-weight: 700;
+}
+
+.time-sub {
+    font-size: 1.6vw; /* was 1.2 */
+    opacity: 0.8;
+}
+
+/* ===========================
+   BOTTOM BAR
+   =========================== */
+#bottom-bar {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 1vw;
+    padding: 2vh 2vw;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 1.6vw; /* was 1.2 */
+}
+
+#qr-box {
+    width: 5vw; /* was 4 */
+    height: 5vw;
+    background: #fff;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5vw;
+    font-weight: 700;
+}
+
+#logo-box {
+    opacity: 0.8;
+    font-size: 1.6vw; /* was 1.2 */
+}
+
+.tv-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(20, 0, 40, 0.85);
+  border-top: 2px solid #d4af37;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.badge {
+  background: #4b2a7f;
+  color: #d4af37;
+  padding: 10px 14px;
+  font-weight: bold;
+  font-size: 1rem;
+  border-right: 2px solid #d4af37;
+  margin-left: 12px;
+  border-radius: 6px 0 0 6px;
+}
+
+.scroll-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+  padding-left: 12px;
+}
+
+.scroll-text {
+  display: inline-block;
+  padding-left: 100%;
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: marqueeScroll 22s linear infinite;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+#side-panel {
+    display: none !important;
+}
+
+
+#logo-box {
+    opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+
+    <!-- BACKGROUND WRAPPER -->
+    <div id="screen">
+
+        <!-- FLASHING BORDER (Sehri only) -->
+        <div id="sehri-alert-border"></div>
+
+        <!-- BIG POPUP WARNING (Sehri only) -->
+        <div id="sehri-popup">
+            <div id="sehri-popup-content">
+<h1 id="sehri-popup-title">⚠️ 5 MINUTES LEFT FOR SEHRI</h1>
+
+                <p>Please complete your fast.</p>
+            </div>
+        </div>
+
+        <!-- TOP BAR -->
+        <header id="top-bar">
+            <div id="status-left">Online</div>
+            <div id="masjid-name">Al-Hira Centre</div>
+            <div id="weather-box">
+                <div id="weather-box">
+    <span id="weather-icon">☾</span>
+    <span id="weather-temp">4°C</span>
+</div>
+
+            </div>
+        </header>
+
+        <!-- CENTER CLOCK + SIDE INFO -->
+        <section id="center-section">
+
+            <!-- CLOCK PANEL -->
+            <div id="clock-panel">
+                <div id="clock-time">00:00:00</div>
+                <div id="clock-date">Wednesday, 19 Feb 2026</div>
+
+                <!-- COUNTDOWNS -->
+<div id="countdowns">
+    <div class="countdown-box">
+        Sehri (Fajr) in <span id="sehri-timer">--:--:--</span>
+    </div>
+
+    <div class="countdown-box">
+        Iftaar (Maghrib) in <span id="iftaar-timer">--:--:--</span>
+    </div>
+
+    <div class="countdown-box">
+        Next Prayer in <span id="next-timer">--:--:--</span>
+    </div>
+</div>
+
+
+<aside id="side-panel">    <div class="side-pill">
+        <span class="pill-label">Shurûq</span>
+        <span id="shuruq-time" class="pill-time">--:--</span>
+    </div>
+
+    <div class="side-pill">
+        <span class="pill-label">Jumu‘a</span>
+        <span class="pill-time">
+            <span id="jumua-1">12:30</span> /
+            <span id="jumua-2">13:30</span>
+        </span>
+    </div>
+</aside>
+
+
+        </section>
+
+        <!-- PRAYER GRID -->
+        <section id="prayer-grid">
+
+            <div class="prayer-card">
+                <div class="prayer-name">Fajr</div>
+                <div class="prayer-times">
+                    <span id="fajr-beg" class="time-main">--:--</span>
+                    
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-name">Dhuhr</div>
+                <div class="prayer-times">
+                    <span id="dhuhr-beg" class="time-main">--:--</span>
+                 
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-name">Asr</div>
+                <div class="prayer-times">
+                    <span id="asr-beg" class="time-main">--:--</span>
+                
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-name">Maghrib</div>
+                <div class="prayer-times">
+                    <span id="maghrib-beg" class="time-main">--:--</span>
+             
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <div class="prayer-name">Isha</div>
+                <div class="prayer-times">
+                    <span id="isha-beg" class="time-main">--:--</span>
+                 
+                </div>
+            </div>
+
+        </section>
+
+<!-- LIVE STREAM WRAPPER -->
+<div class="live-wrapper">
+    <div class="live-box">
+        <iframe 
+            src="https://www.youtube.com/embed/_pJTDb92ShQ?autoplay=1&mute=1&controls=0"
+            allow="autoplay"
+            allowfullscreen="false">
+        </iframe>
+    </div>
+
+    <div class="live-box">
+        <iframe 
+            src="https://www.youtube.com/embed/3L7Gf0BD0gc?autoplay=1&mute=1&controls=0"
+            allow="autoplay"
+            allowfullscreen="false">
+        </iframe>
+    </div>
+</div>
+
+
+        <!-- marquee -->
+ 
+<div class="tv-bar">
+  <div class="badge">Notices</div>
+  <div class="scroll-wrapper">
+    <div class="scroll-text">
+      Donate Now: Al Hira Educational Centre — Sort Code: 30-64-10 — Account: 34642160 (May Allah reward you for your donation)
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+<script>
+    /* ============================================================
+   RAMADAN TIMETABLE (FROM YOUR PDF)
+   ============================================================ */
+
+const ramadanTable = [
+    // Day 1
+    { date: "2026-02-19", fajr: "05:21", sunrise: "07:13", dhuhr: "12:21", asr: "15:32", maghrib: "17:30", isha: "19:22" },
+    // Day 2
+    { date: "2026-02-20", fajr: "05:18", sunrise: "07:11", dhuhr: "12:21", asr: "15:34", maghrib: "17:32", isha: "19:24" },
+    // Day 3
+    { date: "2026-02-21", fajr: "05:16", sunrise: "07:08", dhuhr: "12:21", asr: "15:36", maghrib: "17:34", isha: "19:26" },
+    // Day 4
+    { date: "2026-02-22", fajr: "05:14", sunrise: "07:06", dhuhr: "12:21", asr: "15:38", maghrib: "17:36", isha: "19:28" },
+    // Day 5
+    { date: "2026-02-23", fajr: "05:12", sunrise: "07:04", dhuhr: "12:20", asr: "15:40", maghrib: "17:38", isha: "19:30" },
+    // Day 6
+    { date: "2026-02-24", fajr: "05:10", sunrise: "07:02", dhuhr: "12:20", asr: "15:41", maghrib: "17:40", isha: "19:32" },
+    // Day 7
+    { date: "2026-02-25", fajr: "05:08", sunrise: "06:59", dhuhr: "12:20", asr: "15:43", maghrib: "17:42", isha: "19:34" },
+    // Day 8
+    { date: "2026-02-26", fajr: "05:06", sunrise: "06:57", dhuhr: "12:20", asr: "15:45", maghrib: "17:44", isha: "19:36" },
+    // Day 9
+    { date: "2026-02-27", fajr: "05:03", sunrise: "06:55", dhuhr: "12:20", asr: "15:46", maghrib: "17:46", isha: "19:37" },
+    // Day 10
+    { date: "2026-02-28", fajr: "05:01", sunrise: "06:53", dhuhr: "12:20", asr: "15:48", maghrib: "17:48", isha: "19:39" },
+    // Day 11
+    { date: "2026-03-01", fajr: "04:59", sunrise: "06:50", dhuhr: "12:19", asr: "15:50", maghrib: "17:49", isha: "19:41" },
+    // Day 12
+    { date: "2026-03-02", fajr: "04:57", sunrise: "06:48", dhuhr: "12:19", asr: "15:52", maghrib: "17:51", isha: "19:43" },
+    // Day 13
+    { date: "2026-03-03", fajr: "04:54", sunrise: "06:46", dhuhr: "12:19", asr: "15:53", maghrib: "17:53", isha: "19:45" },
+    // Day 14
+    { date: "2026-03-04", fajr: "04:52", sunrise: "06:43", dhuhr: "12:19", asr: "15:55", maghrib: "17:55", isha: "19:47" },
+    // Day 15
+    { date: "2026-03-05", fajr: "04:49", sunrise: "06:41", dhuhr: "12:19", asr: "15:57", maghrib: "17:57", isha: "19:49" },
+    // Day 16
+    { date: "2026-03-06", fajr: "04:47", sunrise: "06:39", dhuhr: "12:18", asr: "15:58", maghrib: "17:59", isha: "19:51" },
+    // Day 17
+    { date: "2026-03-07", fajr: "04:44", sunrise: "06:36", dhuhr: "12:18", asr: "16:00", maghrib: "18:01", isha: "19:53" },
+    // Day 18
+    { date: "2026-03-08", fajr: "04:42", sunrise: "06:34", dhuhr: "12:18", asr: "16:01", maghrib: "18:03", isha: "19:55" },
+    // Day 19
+    { date: "2026-03-09", fajr: "04:39", sunrise: "06:31", dhuhr: "12:18", asr: "16:03", maghrib: "18:05", isha: "19:57" },
+    // Day 20
+    { date: "2026-03-10", fajr: "04:37", sunrise: "06:29", dhuhr: "12:17", asr: "16:05", maghrib: "18:07", isha: "19:59" },
+    // Day 21
+    { date: "2026-03-11", fajr: "04:34", sunrise: "06:27", dhuhr: "12:17", asr: "16:06", maghrib: "18:09", isha: "20:00" },
+    // Day 22
+    { date: "2026-03-12", fajr: "04:32", sunrise: "06:24", dhuhr: "12:17", asr: "16:08", maghrib: "18:10", isha: "20:00" },
+    // Day 23
+    { date: "2026-03-13", fajr: "04:29", sunrise: "06:22", dhuhr: "12:17", asr: "16:09", maghrib: "18:12", isha: "20:00" },
+    // Day 24
+    { date: "2026-03-14", fajr: "04:27", sunrise: "06:19", dhuhr: "12:16", asr: "16:11", maghrib: "18:14", isha: "20:00" },
+    // Day 25
+    { date: "2026-03-15", fajr: "04:24", sunrise: "06:17", dhuhr: "12:16", asr: "16:12", maghrib: "18:16", isha: "20:00" },
+    // Day 26
+    { date: "2026-03-16", fajr: "04:21", sunrise: "06:15", dhuhr: "12:16", asr: "16:14", maghrib: "18:18", isha: "20:00" },
+    // Day 27
+    { date: "2026-03-17", fajr: "04:18", sunrise: "06:12", dhuhr: "12:15", asr: "16:15", maghrib: "18:20", isha: "20:00" },
+    // Day 28
+    { date: "2026-03-18", fajr: "04:16", sunrise: "06:10", dhuhr: "12:15", asr: "16:17", maghrib: "18:22", isha: "20:00" },
+    // Day 29
+    { date: "2026-03-19", fajr: "04:13", sunrise: "06:07", dhuhr: "12:15", asr: "16:18", maghrib: "18:24", isha: "20:00" },
+    // Day 30
+    { date: "2026-03-20", fajr: "04:10", sunrise: "06:05", dhuhr: "12:15", asr: "16:20", maghrib: "18:25", isha: "20:00" }
+];
+
+/* ============================================================
+   FIND TODAY'S RAMADAN ROW
+   ============================================================ */
+
+function getTodayRow() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    return ramadanTable.find(row => row.date === todayStr);
+}
+
+/* ============================================================
+   UPDATE PRAYER TIMES ON SCREEN
+   ============================================================ */
+
+function loadPrayerTimes(row) {
+    if (!row) return;
+
+    document.getElementById("fajr-beg").textContent = row.fajr;
+
+
+    document.getElementById("dhuhr-beg").textContent = row.dhuhr;
+
+
+    document.getElementById("asr-beg").textContent = row.asr;
+
+
+    document.getElementById("maghrib-beg").textContent = row.maghrib;
+
+
+    document.getElementById("isha-beg").textContent = row.isha;
+
+
+    document.getElementById("shuruq-time").textContent = row.sunrise;
+}
+
+/* ============================================================
+   CLOCK + DATE
+   ============================================================ */
+
+function updateClock() {
+    const now = new Date();
+
+    const h = String(now.getHours()).padStart(2, "0");
+    const m = String(now.getMinutes()).padStart(2, "0");
+    const s = String(now.getSeconds()).padStart(2, "0");
+
+    document.getElementById("clock-time").textContent = `${h}:${m}:${s}`;
+
+    const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    document.getElementById("clock-date").textContent = dateStr;
+}
+
+/* ============================================================
+   COUNTDOWN HELPERS
+   ============================================================ */
+
+function getTimeDiff(targetTime) {
+    const now = new Date();
+    const [hh, mm] = targetTime.split(":").map(Number);
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0);
+    return target - now;
+}
+
+function formatDiff(ms) {
+    if (ms <= 0) return "00:00:00";
+    const totalSec = Math.floor(ms / 1000);
+    const h = String(Math.floor(totalSec / 3600)).padStart(2, "0");
+    const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
+    const s = String(totalSec % 60).padStart(2, "0");
+    return `${h}:${m}:${s}`;
+}
+
+/* ============================================================
+   SEHRI ALERTS + ADHAN
+   ============================================================ */
+
+let adhanPlayed = false;
+
+function handleSehriAlerts(row) {
+    const diff = getTimeDiff(row.fajr);
+
+    // Update countdown
+    document.getElementById("sehri-timer").textContent = formatDiff(diff);
+
+    // 5-minute warning
+    if (diff <= 5 * 60 * 1000 && diff > 0) {
+        document.getElementById("sehri-alert-border").style.display = "block";
+        document.getElementById("sehri-alert-border").classList.add("flash-border");
+
+        document.getElementById("sehri-popup").style.display = "flex";
+    }
+
+    if (diff <= 5 * 60 * 1000 && diff > 0) {
+    document.getElementById("sehri-alert-border").style.display = "block";
+    document.getElementById("sehri-alert-border").classList.add("flash-border");
+    document.getElementById("sehri-popup").style.display = "flex";
+
+    // UPDATE POPUP TEXT LIVE
+    const mins = Math.floor(diff / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById("sehri-popup-title").innerText =
+        `⚠️ Sehri ending in ${mins}:${secs.toString().padStart(2, "0")}`;
+}
+// Hide popup when Sehri is over
+if (diff <= 0) {
+    document.getElementById("sehri-alert-border").style.display = "none";
+    document.getElementById("sehri-alert-border").classList.remove("flash-border");
+
+    document.getElementById("sehri-popup").style.display = "none";
+}
+
+
+// Play adhan 45 seconds before Fajr + show popup
+if (diff <= 45000 && !adhanPlayed && diff > 0) {
+    const audio = new Audio("adhan.mp3");
+    audio.play();
+    adhanPlayed = true;
+
+    
+}
+
+}
+/* ============================================================
+   IFTAAR COUNTDOWN
+   ============================================================ */
+
+function handleIftaar(row) {
+    const diff = getTimeDiff(row.maghrib);
+    document.getElementById("iftaar-timer").textContent = formatDiff(diff);
+}
+
+/* ============================================================
+   NEXT PRAYER COUNTDOWN
+   ============================================================ */
+
+function handleNextPrayer(row) {
+    const now = new Date();
+
+    const times = [
+        { name: "Fajr", time: row.fajr },
+        { name: "Dhuhr", time: row.dhuhr },
+        { name: "Asr", time: row.asr },
+        { name: "Maghrib", time: row.maghrib },
+        { name: "Isha", time: row.isha }
+    ];
+
+    let next = null;
+
+    for (let t of times) {
+        const diff = getTimeDiff(t.time);
+        if (diff > 0) {
+            next = { name: t.name, diff };
+            break;
+        }
+    }
+
+    if (!next) {
+        document.getElementById("next-timer").textContent = "00:00:00";
+        return;
+    }
+
+    document.getElementById("next-timer").textContent = formatDiff(next.diff);
+}
+
+/* ============================================================
+   MAIN LOOP
+   ============================================================ */
+
+function mainLoop() {
+    const row = getTodayRow();
+    if (!row) return;
+
+    updateClock();
+    handleSehriAlerts(row);
+    handleIftaar(row);
+    handleNextPrayer(row);
+}
+
+window.onload = () => {
+    const row = getTodayRow();
+    if (row) loadPrayerTimes(row);
+
+    setInterval(mainLoop, 1000);
+};
+
+
+
+
+
+
+
+
+async function updateWeather() {
+    const lat = 53.6458;   // Huddersfield
+    const lon = -1.7850;
+
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code,is_day`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const temp = Math.round(data.current.temperature_2m);
+        const feels = Math.round(data.current.apparent_temperature);
+        const code = data.current.weather_code;
+        const isDay = data.current.is_day === 1;
+
+        // Convert weather code → icon
+        const icon = getWeatherIcon(code, isDay);
+
+        document.getElementById("weather-temp").textContent =
+            `${temp}°C (Feels ${feels}°C)`;
+
+        document.getElementById("weather-icon").innerHTML = icon;
+
+    } catch (err) {
+        console.error("Weather error:", err);
+    }
+}
+
+function getWeatherIcon(code, isDay) {
+    const sun = "☀️";
+    const moon = "🌙";
+    const cloud = "☁️";
+    const rain = "🌧️";
+    const storm = "⛈️";
+    const snow = "❄️";
+    const fog = "🌫️";
+
+    if (code === 0) return isDay ? sun : moon;          // Clear
+    if ([1, 2, 3].includes(code)) return cloud;         // Partly cloudy
+    if ([45, 48].includes(code)) return fog;            // Fog
+    if ([51, 53, 55, 61, 63, 65].includes(code)) return rain; // Rain
+    if ([71, 73, 75].includes(code)) return snow;       // Snow
+    if ([95, 96, 99].includes(code)) return storm;      // Thunder
+
+    return cloud;
+}
+
+// Update every 10 minutes
+updateWeather();
+setInterval(updateWeather, 600000);
+
+
+
+</script>
+</body>
+
+
+
+</html>
